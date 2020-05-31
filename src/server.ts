@@ -15,7 +15,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
   // @TODO1 IMPLEMENT A RESTFUL ENDPOINT
   // GET /filteredimage?image_url={{URL}}
-  app.get('/filteredimage',async (req,res) => {
+  app.get('/filteredimage',async (req:Request,res:Response) => {
     let {image_url} = req.query;
     // 1. validate the image_url query
     if(!image_url)
@@ -26,7 +26,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
         const image_file = await filterImageFromURL(image_url);
         // 3. send the resulting file in the response
         res.on('finish',function(){deleteLocalFiles([image_file])})
-        res.sendFile(image_file);
+        res.status(200).sendFile(image_file);
         // console.log(image_file)
         // 4. deletes any files on the server on finish of the response 
       }
